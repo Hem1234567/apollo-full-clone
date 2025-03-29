@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link href="./output.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .carousel-container {
+        overflow: hidden;
+        width: 100%;
+        max-width: 1024px;
+        margin: auto;
+        position: relative;
+        margin-top: 40px;
+      }
+
+      .carousel {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+      }
+
+      .carousel-item,
+      .carousel-slide {
+        flex: 0 0 100%;
+        display: flex;
+        justify-content: space-around;
+      }
+
+      .carousel-card {
+        flex: 1;
+        margin: 0 10px;
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      .carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: white;
+        color: rgb(58, 126, 58);
+        padding: 5px;
+        cursor: pointer;
+        border-radius: 10%;
+        z-index: 10;
+        border-width: 2px;
+        border-style: solid;
+        border-color: rgb(58, 126, 58);
+      }
+
+      .prev {
+        left: 10px;
+      }
+      .next {
+        right: 10px;
+      }
+
+      /* Hide buttons on mobile */
+      @media (max-width: 768px) {
+        .carousel-btn {
+          display: none;
+        }
+        .carousel-slide {
+          flex-wrap: nowrap;
+          overflow-x: scroll;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        .carousel-card {
+          flex: 0 0 80%;
+          margin: 0 5px;
+          scroll-snap-align: start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header
+      class="flex justify-between items-center px-6 py-2 border-b border-gray-300"
+    >
+      <!-- Logo (Aligns left on mobile) -->
+      <div class="flex items-center space-x-2 ml-0 md:ml-24">
+        <img
+          src="https://images.apollo247.in/images/icons/apollo247.svg"
+          class="h-14 md:h-14"
+        />
+      </div>
+
+      <!-- Login Button (Aligns right on mobile) -->
+      <button
+        class="flex items-center border-2 border-teal-700 px-4 py-1 rounded-md text-teal-700 hover:bg-teal-50 ml-auto md:mr-24 font-semibold"
+      >
+        <span class="hidden md:block">Login</span>
+        <i class="fa-regular fa-user md:ml-2 text-xl"></i>
+      </button>
+    </header>
+    <!-- Navigation Menu -->
+    <nav
+      class="md:flex space-x-6 px-6 py-2 text-black text-sm font-semibold justify-center items-center border-b hidden"
+    >
+      <a
+        href="#"
+        class="hover:text-teal-600 hover:border-b-2 hover:border-teal-600"
+        >Buy Medicines</a
+      >
+      <a
+        href="#"
+        class="hover:text-teal-600 hover:border-b-2 hover:border-teal-600"
+        >Find Doctors</a
+      >
+      <a
+        href="#"
+        class="hover:text-teal-600 hover:border-b-2 hover:border-teal-600"
+        >Find Doctors</a
+      >
+      <a
+        href="#"
+        class="hover:text-teal-600 hover:border-b-2 hover:border-teal-600"
+        >Lab Tests</a
+      >
+      <a
+        href="#"
+        class="hover:text-teal-600 hover:border-b-2 hover:border-teal-600"
+        >Circle Membership</a
+      >
+      <a
+        href="#"
+        class="hover:text-teal-600 hover:border-b-2 hover:border-teal-600"
+        >Health Records</a
+      >
+      <a
+        href="#"
+        class="hover:text-teal-600 hover:border-b-2 hover:border-teal-600"
+        >Diabetes Reversal</a
+      >
+      <a
+        href="#"
+        class="hover:text-teal-600 flex items-center hover:border-b-2 hover:border-teal-600"
+      >
+        Buy Insurance
+        <span
+          class="bg-teal-100 text-teal-600 text-xs font-medium px-1.5 py-0.5 rounded ml-1"
+          >New</span
+        >
+      </a>
+    </nav>
+
+    <!-- Bottom Navigation Bar -->
+    <nav
+      class="fixed bottom-0 w-full bg-white shadow-md flex justify-around py-2 text-gray-600 md:hidden"
+    >
+      <a href="#" class="flex flex-col items-center text-blue-600">
+        <i class="fa-solid fa-house h-6 w-6"></i>
+        <span class="text-xs">Home</span>
+      </a>
+      <a href="#" class="flex flex-col items-center">
+        <i class="fa-solid fa-stethoscope h-6 w-6"></i>
+        <span class="text-xs">Doctor</span>
+      </a>
+      <a href="#" class="flex flex-col items-center">
+        <i class="fa-solid fa-prescription-bottle-medical h-6 w-6"></i>
+        <span class="text-xs">medicines</span>
+      </a>
+      <a href="#" class="flex flex-col items-center">
+        <i class="fa-solid fa-vial h-6 w-6"></i>
+        <span class="text-xs">Login</span>
+      </a>
+      <a href="#" class="flex flex-col items-center">
+        <i class="fa-solid fa-file-medical h-6 w-6"></i>
+        <span class="text-xs">Pro</span>
+      </a>
+    </nav>
+    <main class="mb-20">
+      <!-- First Carousel -->
+      <div class="carousel-container">
+        <div class="carousel" id="carousel1">
+          <div class="carousel-item">
+            <img
+              src="https://images.apollo247.in/pd-cms/cms/2024-06/web_4x.jpg"
+              class="w-full"
+              alt="Slide 1"
+            />
+          </div>
+          <div class="carousel-item">
+            <img
+              src="https://images.apollo247.in/pd-cms/cms/2024-06/web_4x.jpg?tr=q-80"
+              class="w-full"
+              alt="Slide 2"
+            />
+          </div>
+          <div class="carousel-item">
+            <img
+              src="https://images.apollo247.in/pd-cms/cms/2024-06/Frame%201814106267.png?tr=q-80"
+              class="w-full"
+              alt="Slide 3"
+            />
+          </div>
+        </div>
+        <button class="carousel-btn prev" onclick="prevSlide('carousel1')">
+          <i class="fa-solid fa-left-long"></i>
+        </button>
+        <button class="carousel-btn next" onclick="nextSlide('carousel1')">
+          <i class="fa-solid fa-right-long"></i>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 p-2 md:p-4 md:flex mt-10">
+        <!-- Buy Medicines & Essentials -->
+        <div
+          class="flex flex-row items-center justify-center bg-green-100 p-4 rounded-xl w-full shadow-sm"
+        >
+          <img
+            src="https://images.apollo247.in/images/home-screen/contentful/MedicineIcon_ServiceNavigator.png"
+            alt="Medicine Icon"
+            class="h-12 mb-2"
+          />
+          <div class="text-center p-2">
+            <p class="text-black font-semibold">Buy Medicines & Essentials</p>
+            <p class="text-xs text-green-700 font-bold">2HRS DELIVERY</p>
+          </div>
+        </div>
+
+        <!-- Order via Prescription -->
+        <div
+          class="flex flex-row items-center justify-center bg-green-100 p-4 rounded-xl w-full shadow-sm"
+        >
+          <img
+            src="https://images.apollo247.in/images/home-screen/contentful/Insurance_icon_service_navigator.png"
+            alt="Prescription Icon"
+            class="h-12 mb-2"
+          />
+          <div class="text-center p-2">
+            <p class="text-black font-semibold">Order via Prescription</p>
+            <p class="text-xs text-green-700 font-bold">10% OFF</p>
+          </div>
+        </div>
+
+        <!-- Doctor Appointment -->
+        <div
+          class="flex flex-row items-center justify-center bg-yellow-100 p-4 rounded-xl w-full shadow-sm"
+        >
+          <img
+            src="https://images.apollo247.in/images/ui_revamp_video_consult.svg"
+            alt="Doctor Icon"
+            class="h-12 mb-2"
+          />
+          <div class="text-center p-2">
+            <p class="text-black font-semibold">Doctor Appointment</p>
+            <p class="text-xs text-yellow-700 font-bold">BOOK NOW</p>
+          </div>
+        </div>
+
+        <!-- Lab Tests -->
+        <div
+          class="flex flex-row items-center justify-center bg-red-100 p-4 rounded-xl w-full shadow-sm"
+        >
+          <img
+            src="https://images.apollo247.in/images/ui_revamp_labtest.svg"
+            alt="Lab Icon"
+            class="h-12 mb-2"
+          />
+          <div class="text-center p-2">
+            <p class="text-black font-semibold">Lab Tests</p>
+            <p class="text-xs text-red-700 font-bold">AT HOME</p>
+          </div>
+        </div>
+
+        <!-- Insurance -->
+        <div
+          class="flex flex-row items-center justify-center bg-blue-100 p-4 rounded-xl w-full shadow-sm"
+        >
+          <img
+            src="https://images.apollo247.in/images/home-screen/contentful/Insurance_icon_service_navigator.png"
+            alt="Insurance Icon"
+            class="h-12 mb-2"
+          />
+          <div class="text-center p-2">
+            <p class="text-black font-semibold">Insurance</p>
+            <p class="text-xs text-blue-700 font-bold">EXPLORE PLANS</p>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-col md:flex-row h-auto md:h-32 items-center justify-between bg-gradient-to-r from-[#3b1e0e] to-[#1c0e05] text-white p-4 rounded-xl shadow-lg w-full max-w-6xl mx-auto mt-10"
+      >
+        <!-- Left Section -->
+        <div
+          class="flex flex-col md:flex-row items-center space-y-3 md:space-y-0 md:space-x-3 w-full md:w-auto"
+        >
+          <img
+            src="https://media-hosting.imagekit.io/0108a579c0ef49ad/Screenshot_2025-03-28_214040-removebg-preview.png?Expires=1837786324&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=Qspg4Fr8rZqqvFXdCXwGdM2gltbERA34IyocHAVTkqgp1Q2VMx3371pYnNK7cw67PoauTpAAPJWfLvHO~bRpr8SHG6LtMXEDbdRtLU86RXYsEBcgFjSov~6FpBci8zj3ifJ8alhQA0Pu~DhRQ~MPW60onA~F~SnVfqjv3k3xNqTI6UUEdIcBBndI9zT2s4nC1yGpi~sUDvPGr0nVvHM~yO2XQC3~2cb5cT96eAiC55sL3y9nN38uUII3L6dZRykZqaKFnghSYwOqgJyq4WOnboh517PxWOzHYZCpY3fA80XYKEotbyZI~uZkxzojS9A6wmPdzqA-d8vlHfWt1sZDUw__"
+            class="h-16 w-32 md:h-20 md:w-40"
+          />
+          <p class="font-bold text-center md:text-left">
+            Now enjoy max benefits with your Circle Membership
+          </p>
+        </div>
+
+        <!-- Benefits Section -->
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 md:flex md:items-center md:space-x-6 text-sm w-full md:w-auto mt-3 md:mt-0"
+        >
+          <div class="flex items-center space-x-2">
+            <i class="fas fa-tags text-orange-400"></i>
+            <p>Flat 15% cashback + FREE Delivery on Medicines</p>
+          </div>
+          <div class="flex items-center space-x-2">
+            <i class="fas fa-vial text-orange-400"></i>
+            <p>1 FREE Health Test</p>
+          </div>
+          <div class="flex items-center space-x-2">
+            <i class="fas fa-user-md text-orange-400"></i>
+            <p>FREE Apollo Doctor-on-Call</p>
+          </div>
+          <div class="flex items-center space-x-2">
+            <i class="fas fa-shield-alt text-orange-400"></i>
+            <p>1 Lakh Accidental Insurance Cover</p>
+          </div>
+        </div>
+
+        <!-- Button Section -->
+        <div class="mt-4 md:mt-0">
+          <button
+            class="border border-white text-white px-4 py-2 rounded-lg hover:bg-white hover:text-black transition"
+          >
+            Explore
+          </button>
+        </div>
+      </div>
+
+      <!-- Second Carousel -->
+      <div class="carousel-container">
+        <div class="carousel" id="carousel2">
+          <div class="carousel-slide">
+            <div class="carousel-card">
+              <a
+                href="https://www.apollo247.com/lab-tests/apollo-health-check-master"
+              >
+                <img
+                  src="https://images.apollo247.in/pd-cms/cms/2024-06/web_2x.jpg?tr=q-80"
+                  alt="Health Check Master"
+                />
+              </a>
+            </div>
+            <div class="carousel-card">
+              <a href="https://ur.life/nutrition?utm_source=apollo247">
+                <img
+                  src="https://images.apollo247.in/pd-cms/cms/2024-09/UR.Life_Banner_412x200_4.jpg?tr=q-80"
+                  alt="Nutrition Banner"
+                />
+              </a>
+            </div>
+            <div class="carousel-card">
+              <a href="https://www.apollopharmacy.in/deal/43891">
+                <img
+                  src="https://images.apollo247.in/pd-cms/cms/2024-07/monsoon%20essential%20410x200.jpg?tr=q-80"
+                  alt="Monsoon Essentials"
+                />
+              </a>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="carousel-card">
+              <a href="https://www.apollo247.com/symptom-checker-doctors">
+                <img
+                  src="https://images.apollo247.in/pd-cms/cms/2024-08/410x200%20(1).jpg?tr=q-80"
+                  alt="Symptom Checker"
+                />
+              </a>
+            </div>
+            <div class="carousel-card">
+              <a href="https://www.apollopharmacy.in/">
+                <img
+                  src="https://images.apollo247.in/pd-cms/cms/2024-10/medicines.jpg?tr=q-80"
+                  alt="Apollo Pharmacy"
+                />
+              </a>
+            </div>
+            <div class="carousel-card">
+              <a href="https://www.apollo247.com/online-doctor-consultation">
+                <img
+                  src="https://images.apollo247.in/pd-cms/cms/2024-11/doctor.jpg?tr=q-80"
+                  alt="Doctor Consultation"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-btn prev" onclick="prevSlide('carousel1')">
+          <i class="fa-solid fa-left-long"></i>
+        </button>
+        <button class="carousel-btn next" onclick="nextSlide('carousel1')">
+          <i class="fa-solid fa-right-long"></i>
+        </button>
+      </div>
+
+      <div
+        class="flex flex-col md:flex-row items-center justify-between bg-gradient-to-r from-[#0c3b4e] to-[#061e2b] text-white p-6 rounded-xl shadow-lg w-full max-w-5xl mx-auto mt-10"
+      >
+        <!-- Left Section -->
+        <div
+          class="flex flex-col md:flex-row items-center text-center md:text-left space-y-4 md:space-y-0 md:space-x-4 w-full"
+        >
+          <img
+            src="https://media-hosting.imagekit.io/a0660967360b442a/Screenshot_2025-03-28_215014-removebg-preview.png?Expires=1837786889&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=SSJ0BVBUF~uKffJLQWrinsWdeVW9fZ2NzI6KdNQlL7b~0FzSBehwuWyJNtJyn8ZjSPIpt54JJEzZf1X8FMs0SqXrH1naNAhbJZNnyS5T9ND~EmeNp5Tn5HPAv4BQ28YlSuI09OUm2jdOryqDniAjViXjyV5Cruo~ucGTHVKFSI2WC-KddzXHPWxsZCqtO9F~1I38mkPg-k9nrZw1a7VL9Nn-9B7elo9~qxW6zLCLhZNqB6FlkbMLsD-5ijFNKIIufxqp9DqiO22kMS1EBZPc6KXAP0r~vzaYmZyPRajGpyTi82MusWvsH8QMD0Bmsq1toLsGnD3JZ2GMMQkULZUn6w__"
+            alt="Ask Apollo Logo"
+            class="w-24 h-24 md:w-32 md:h-32 rounded-full mx-auto md:mx-0"
+          />
+          <p class="text-lg font-semibold px-4">
+            Feeling unwell? <br />
+            <span class="font-bold">Check what is causing your symptoms</span>
+            and find the right doctor
+          </p>
+        </div>
+
+        <!-- Button Section -->
+        <div class="mt-4 md:mt-0 w-full md:w-auto flex justify-center">
+          <button
+            class="bg-white text-blue-800 font-semibold px-5 py-2 rounded-lg flex items-center space-x-2 hover:bg-gray-200 transition"
+          >
+            <span>Get Started</span>
+            <span class="ml-1">➤</span>
+          </button>
+        </div>
+      </div>
+
+      <div
+        class="overflow-x-auto whitespace-nowrap pb-4 scrollbar-hide flex flex-row justify-center items-center mt-10 ml-5"
+      >
+        <div class="inline-block">
+          <div class="flex gap-4">
+            <div class="bg-white p-4 shadow-md rounded-lg">
+              <div class="flex items-center space-x-3">
+                <img
+                  src="https://images.apollo247.in/images/diagnostics/App/Items/Test/Blood_Studies.png"
+                  alt="CBC Test"
+                  class="w-12 h-12"
+                />
+                <div>
+                  <h3 class="font-semibold">CBC Test (Complete Blood Count)</h3>
+                  <p class="text-gray-500 text-sm">30 Tests Included</p>
+                </div>
+              </div>
+              <div class="mt-3">
+                <p class="text-lg font-bold">
+                  ₹478
+                  <span class="line-through text-gray-500 text-sm">₹637</span>
+                  <span class="text-green-600 text-sm">25% off</span>
+                </p>
+                <p
+                  class="text-sm bg-orange-100 px-2 py-1 rounded-lg inline-block"
+                >
+                  🔶 Circle Member price
+                  <span class="font-semibold">₹382 ⏷</span>
+                </p>
+              </div>
+              <button
+                class="bg-blue-600 text-white px-4 py-2 rounded-lg mt-3 w-full"
+              >
+                Add
+              </button>
+            </div>
+            <div class="bg-white p-4 shadow-md rounded-lg">
+              <div class="flex items-center space-x-3">
+                <img
+                  src="https://images.apollo247.in/images/diagnostics/App/Items/Test/Diabetes.png"
+                  alt="HbA1c Test"
+                  class="w-12 h-12"
+                />
+                <div>
+                  <h3 class="font-semibold">HbA1c Test (Hemoglobin A1c)</h3>
+                  <p class="text-gray-500 text-sm">3 Tests Included</p>
+                </div>
+              </div>
+              <div class="mt-3">
+                <p class="text-lg font-bold">
+                  ₹763
+                  <span class="line-through text-gray-500 text-sm">₹1017</span>
+                  <span class="text-green-600 text-sm">25% off</span>
+                </p>
+                <p
+                  class="text-sm bg-orange-100 px-2 py-1 rounded-lg inline-block"
+                >
+                  🔶 Circle Member price
+                  <span class="font-semibold">₹610 ⏷</span>
+                </p>
+              </div>
+              <button
+                class="bg-blue-600 text-white px-4 py-2 rounded-lg mt-3 w-full"
+              >
+                Add
+              </button>
+            </div>
+            <div class="bg-white p-4 shadow-md rounded-lg">
+              <div class="flex items-center space-x-3">
+                <img
+                  src="https://images.apollo247.in/images/diagnostics/App/Items/Test/Diabetes.png"
+                  alt="FBS Test"
+                  class="w-12 h-12"
+                />
+                <div>
+                  <h3 class="font-semibold">FBS (Fasting Blood Sugar) Test</h3>
+                  <p class="text-gray-500 text-sm">1 Test Included</p>
+                </div>
+              </div>
+              <div class="mt-3">
+                <p class="text-lg font-bold">
+                  ₹100
+                  <span class="line-through text-gray-500 text-sm">₹133</span>
+                  <span class="text-green-600 text-sm">25% off</span>
+                </p>
+                <p
+                  class="text-sm bg-orange-100 px-2 py-1 rounded-lg inline-block"
+                >
+                  🔶 Circle Member price
+                  <span class="font-semibold">₹80 ⏷</span>
+                </p>
+              </div>
+              <button
+                class="bg-blue-600 text-white px-4 py-2 rounded-lg mt-3 w-full"
+              >
+                Add
+              </button>
+            </div>
+            <div class="bg-white p-4 shadow-md rounded-lg">
+              <div class="flex items-center space-x-3">
+                <img
+                  src="https://images.apollo247.in/images/diagnostics/App/Items/Test/Heart.png"
+                  alt="Lipid Profile Test"
+                  class="w-12 h-12"
+                />
+                <div>
+                  <h3 class="font-semibold">Lipid Profile Test</h3>
+                  <p class="text-gray-500 text-sm">8 Tests Included</p>
+                </div>
+              </div>
+              <div class="mt-3">
+                <p class="text-lg font-bold">
+                  ₹1000
+                  <span class="line-through text-gray-500 text-sm">₹1333</span>
+                  <span class="text-green-600 text-sm">25% off</span>
+                </p>
+                <p
+                  class="text-sm bg-orange-100 px-2 py-1 rounded-lg inline-block"
+                >
+                  🔶 Circle Member price
+                  <span class="font-semibold">₹800 ⏷</span>
+                </p>
+              </div>
+              <button
+                class="bg-blue-600 text-white px-4 py-2 rounded-lg mt-3 w-full"
+              >
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="bg-blue-50 p-2 rounded-xl shadow-md flex flex-col md:flex-row justify-self-center items-center max-w-7xl w-full mt-10"
+      >
+        <img
+          src="https://images.apollo247.in/images/dtdashboard/DT_Banner_2.png?tr=q-80"
+        />
+      </div>
+
+      <div
+        class="bg-blue-50 p-2 rounded-xl shadow-md flex flex-col md:flex-row justify-self-center items-center max-w-7xl w-full mt-10"
+      >
+        <img
+          src="https://images.apollo247.in/pd-cms/cms/2024-09/UR.Life_Banner_1276x212_4.jpg"
+        />
+      </div>
+
+      <div
+        class="overflow-x-auto whitespace-nowrap pb-4 scrollbar-hide flex flex-row justify-center items-center mt-10 ml-5"
+      >
+        <div class="inline-block">
+          <div class="flex gap-4">
+            <div class="max-w-7xl mx-auto mt-10">
+              <!-- Title & View All -->
+              <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold">
+                  Blogs and Articles for You (30)
+                </h2>
+                <a href="#" class="text-blue-500 hover:underline">View All</a>
+              </div>
+
+              <!-- Blog Cards -->
+              <div class="grid grid-cols-6 gap-4">
+                <!-- Blog Card 1 -->
+                <div class="bg-white rounded-lg shadow p-4">
+                  <img
+                    class="rounded-md"
+                    src="https://images.apollo247.in/pd-cms/cms/2025-03/Tax%20benefit%20of%20full%20body%20checkup%20in%20india%20(1).jpg?tr=q-80,f-webp,w-200,dpr-2,c-at_max"
+                    alt="Blog 1"
+                  />
+                  <p class="mt-2 text-sm font-semibold">
+                    Tax Benefits of Full Body Check Up in India: A Detailed
+                    Overview
+                  </p>
+                  <p class="text-gray-500 text-xs">By Apollo 24|7 - 24.03.25</p>
+                </div>
+
+                <!-- Blog Card 2 -->
+                <div class="bg-white rounded-lg shadow p-4">
+                  <img
+                    class="rounded-md"
+                    src="https://images.apollo247.in/pd-cms/cms/2025-03/medicine-concept-with-pills-glas%20(3)_25.jpg?tr=q-80,f-webp,w-200,dpr-2,c-at_max"
+                    alt="Blog 2"
+                  />
+                  <p class="mt-2 text-sm font-semibold">
+                    My baby girl has a cough for the past 5-6 days...
+                  </p>
+                  <p class="text-gray-500 text-xs">By Apollo 24|7 - 24.03.25</p>
+                </div>
+
+                <!-- Blog Card 3 -->
+                <div class="bg-white rounded-lg shadow p-4">
+                  <img
+                    class="rounded-md"
+                    src="https://images.apollo247.in/pd-cms/cms/2025-03/medicine-concept-with-pills-glas%20(3)_25.jpg?tr=q-80,f-webp,w-200,dpr-2,c-at_max"
+                    alt="Blog 3"
+                  />
+                  <p class="mt-2 text-sm font-semibold">
+                    I've been suffering from pain in the upper part of my
+                    stomach...
+                  </p>
+                  <p class="text-gray-500 text-xs">By Apollo 24|7 - 21.03.25</p>
+                </div>
+
+                <!-- Blog Card 4 -->
+                <div class="bg-white rounded-lg shadow p-4">
+                  <img
+                    class="rounded-md"
+                    src="https://images.apollo247.in/pd-cms/cms/2025-03/medicine-concept-with-pills-glas%20(3)_25.jpg?tr=q-80,f-webp,w-200,dpr-2,c-at_max"
+                    alt="Blog 4"
+                  />
+                  <p class="mt-2 text-sm font-semibold">
+                    Hi, my baby is 6 days old. The doctor checked and told me...
+                  </p>
+                  <p class="text-gray-500 text-xs">By Apollo 24|7 - 21.03.25</p>
+                </div>
+
+                <!-- Blog Card 5 -->
+                <div class="bg-white rounded-lg shadow p-4">
+                  <img
+                    class="rounded-md"
+                    src="https://images.apollo247.in/pd-cms/cms/2025-03/medicine-concept-with-pills-glas%20(3)_25.jpg?tr=q-80,f-webp,w-200,dpr-2,c-at_max"
+                    alt="Blog 5"
+                  />
+                  <p class="mt-2 text-sm font-semibold">
+                    I got an ultrasound of my liver and the result came out...
+                  </p>
+                  <p class="text-gray-500 text-xs">By Apollo 24|7 - 21.03.25</p>
+                </div>
+
+                <!-- Blog Card 6 (with Arrow Button) -->
+                <div class="bg-white rounded-lg shadow p-4 relative">
+                  <img
+                    class="rounded-md"
+                    src="https://images.apollo247.in/pd-cms/cms/2025-03/medicine-concept-with-pills-glas%20(3)_25.jpg?tr=q-80,f-webp,w-200,dpr-2,c-at_max"
+                    alt="Blog 6"
+                  />
+                  <p class="mt-2 text-sm font-semibold">
+                    I have jock itch problem for approx 1 year...
+                  </p>
+                  <p class="text-gray-500 text-xs">By Apollo 24|7 - 21.03.25</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="max-w-4xl mx-auto flex flex-col md:flex-row justify-center items-center space-y-6 md:space-y-0 md:space-x-12 mt-10"
+      >
+        <!-- Secure Payment -->
+        <div class="text-center">
+          <img
+            src="https://images.apollo247.in/images/ui_revamp_secure_payment_widget.svg?tr=q-80,w-100,dpr-2,c-at_max%20200w"
+            alt="Secure Payment"
+            class="mx-auto w-20 md:w-auto"
+          />
+          <p class="mt-2 text-gray-700 text-sm font-medium">Secure Payment</p>
+        </div>
+
+        <!-- Trusted by 8 Crore Indians -->
+        <div class="text-center">
+          <img
+            src="https://images.apollo247.in/images/ui_revamp_fullyreliable_widget.svg?tr=q-80,w-200,dpr-2,c-at_max%20400w"
+            alt="Trusted"
+            class="mx-auto w-28 md:w-auto"
+          />
+          <p class="mt-2 text-gray-700 text-sm font-medium">
+            Trusted by 8 Crore Indians
+          </p>
+        </div>
+
+        <!-- Genuine Products -->
+        <div class="text-center">
+          <img
+            src="https://images.apollo247.in/images/ui_revamp_genuineProducts_widget.svg?tr=q-80,w-150,dpr-2,c-at_max%20300w"
+            alt="Genuine Products"
+            class="mx-auto w-24 md:w-auto"
+          />
+          <p class="mt-2 text-gray-700 text-sm font-medium">Genuine Products</p>
+        </div>
+      </div>
+
+      <div class="max-w-screen mx-auto bg-white p-6 rounded-lg shadow-md mt-10 p-10">
+        <!-- Title -->
+        <h1 class="text-lg sm:text-xl font-bold">
+          Apollo 24|7 - Your Most Trusted Healthcare Brand
+        </h1>
+
+        <!-- Collapsible Content -->
+        <div
+          id="expandableContent"
+          class="overflow-hidden max-h-20 sm:max-h-24 transition-all duration-300"
+        >
+          <p class="text-sm sm:text-base mt-2">
+            Apollo 24|7 is the largest multi-channel digital healthcare platform
+            in India, created with a vision of eliminating flexibility blockages
+            from the healthcare industry. We believe in making healthcare
+            affordable to everyone by combining analytic excellence, affordable
+            cost, and extensive research with advanced technology.
+          </p>
+          <p class="text-sm sm:text-base mt-2 hidden">
+            Apollo 24|7 is a single online platform where you have access to a
+            wide range of services such as online pharmacy,
+            <span class="italic font-semibold">online doctor consultations</span
+            >, and <span class="italic font-semibold">lab tests at home</span>.
+            We also provide expert solutions for chronic conditions and
+            COVID-care with a secured digital vault, where you can safely upload
+            all your medical reports.
+          </p>
+
+          <!-- Smart Choice -->
+          <h2 class="text-md sm:text-lg font-bold mt-4">
+            The Smart Choice for Your Health is Here
+          </h2>
+          <p class="text-sm sm:text-base mt-2 hidden">
+            Make the best decision for your health by choosing Apollo 24|7.
+            Here’s why you can count on us:
+          </p>
+          <ul
+            class="list-disc list-inside space-y-1 text-sm sm:text-base mt-2 hidden"
+          >
+            <li>40 years of legacy in the healthcare industry</li>
+            <li>24×7 availability of doctors</li>
+            <li>More than 10 million diagnostic tests each year</li>
+            <li>2000+ collection centres and 100+ laboratories</li>
+            <li>High-quality diagnostic solutions</li>
+          </ul>
+          <!-- Ask a Doctor Section -->
+          <h2 class="mt-6 text-lg font-bold">Ask a Doctor Online 24/7</h2>
+          <p class="mt-2">
+            Online doctor consultations take place through online doctor chat,
+            call, or video call. This helps you to talk to doctors online from
+            the comfort of your home by simply choosing a doctor from different
+            specialties. Avail personalised solutions for any health problem
+            with prompt online doctor consultation with Apollo 24|7.
+          </p>
+
+          <ul class="mt-3 list-disc list-inside space-y-2">
+            <li>Safe and secure platform</li>
+            <li>Video and chat options</li>
+          </ul>
+
+          <!-- Online Doctor Consultation Section -->
+          <h2 class="mt-6 text-lg font-bold">
+            Online Doctor Consultation - Now at Your Fingertips
+          </h2>
+          <p class="mt-2">
+            The demand for doctors is expected to increase as new medicines
+            allow people to live longer. However, there are several ways to
+            reach out to a doctor without the need to visit a hospital or
+            clinic, all thanks to technology. With the online facility
+            available, doctor consultations have become easier, and you can get
+            the right healthcare. Online doctor consultations with 5000+ top
+            medical doctors are available at Apollo 24|7. Video call or chat
+            with expert doctors from 100+ medical specialties, including
+            <span class="font-bold">Dermatology</span> |
+            <span class="font-bold">Gynaecology</span> |
+            <span class="font-bold">Paediatrics</span> |
+            <span class="font-bold">Psychiatry</span> |
+            <span class="font-bold">General Physicians</span> |
+            <span class="font-bold">Gastroenterology</span> |
+            <span class="font-bold">Dietetics</span> |
+            <span class="font-bold">ENT Specialists</span> and more, in just 15
+            minutes.
+          </p>
+          <div class="max-w-full mx-auto">
+            <!-- Benefits Section -->
+            <h2 class="text-lg font-bold">
+              Benefits of choosing online doctor consultations:
+            </h2>
+            <ul class="mt-2 list-disc list-inside space-y-1">
+              <li>Save time, money, and effort.</li>
+              <li>No need to travel.</li>
+              <li>
+                Most convenient option to choose from, and helps in early
+                diagnosis.
+              </li>
+              <li>Online doctor consultations are confidential and safe.</li>
+              <li>No risks of infections.</li>
+            </ul>
+
+            <!-- Apollo Hospitals Section -->
+            <h2 class="mt-6 text-lg font-bold">Apollo Hospitals</h2>
+            <p class="mt-2">
+              Apollo 24|7 is a part of Apollo Hospitals.
+              <span class="font-bold">Apollo Hospitals</span> was established in
+              1983 by Dr. Prathap C Reddy. It incorporates over
+              <span class="font-bold">10,000 beds</span> across
+              <span class="font-bold">70 hospitals</span>, over
+              <span class="font-bold">4,000 pharmacies</span>,
+              <span class="font-bold"
+                >172 primary care and diagnostic clinics</span
+              >, and
+              <span class="font-bold">148 telemedicine facilities</span> spread
+              across <span class="font-bold">13 countries</span>. Apollo
+              Hospitals has touched billions of lives by offering exceptional
+              clinical outcomes.
+            </p>
+
+            <!-- Milestones Section -->
+            <h2 class="mt-6 text-lg font-bold">
+              Milestones of Apollo Hospitals:
+            </h2>
+            <ul class="mt-2 list-disc list-inside space-y-1">
+              <li>
+                40 Years of legacy and credibility in the healthcare industry.
+              </li>
+              <li>NABL certified multi-channel digital healthcare platform.</li>
+              <li>World’s best medical specialists.</li>
+              <li>Largest & trusted branded healthcare network.</li>
+              <li>Advanced healthcare technology.</li>
+            </ul>
+
+            <!-- Pharmacy Section -->
+            <h2 class="mt-6 text-lg font-bold">
+              Pharmacy Simplified with Apollo 24|7
+            </h2>
+            <p class="mt-2">
+              Apollo pharmacy is the most credible and established online
+              pharmacy in India. It delivers
+              <span class="font-bold">100% original</span> medicines and
+              products. Apollo pharmacy is believed to offer super-fast home
+              delivery for all healthcare essentials. Explore our broad range of
+              products such as <span class="font-bold">baby care</span>,
+              <span class="font-bold">personal care</span>,
+              <span class="font-bold">wellness</span>,
+              <span class="font-bold">lifestyle</span>,
+              <span class="font-bold">health</span>, and
+              <span class="font-bold">nutrition</span> categories online with
+              ease.
+            </p>
+
+            <!-- Rapid Deliveries Section -->
+            <h2 class="mt-6 text-lg font-bold">
+              Rapid deliveries of medicines are available online at Apollo
+              Pharmacy.
+            </h2>
+            <p class="mt-2">
+              In some cities, deliveries are done in less than 24 hours.
+            </p>
+            <ul class="mt-2 list-disc list-inside space-y-1">
+              <li>Get health credits on purchasing medicines and products.</li>
+              <li>Alluring deals on medicines and other products.</li>
+              <li>
+                A broad range of medicines and essential healthcare products to
+                choose from.
+              </li>
+              <li>Authentic and top-notch quality products.</li>
+            </ul>
+            <!-- Diagnostic Lab Tests Section -->
+            <h2 class="text-lg font-bold">
+              Convenient Diagnostic Lab Tests at Home
+            </h2>
+            <p class="mt-2">
+              Regular health check-ups are vital for a healthy life because they
+              help in detecting diseases at the earliest, allowing timely
+              treatment. Apollo 24|7 provides blood sample testing at your
+              doorstep conveniently. You can book lab tests at home and utilize
+              the home-collection facility. We offer a broad range of diagnostic
+              lab tests such as:
+            </p>
+
+            <p class="mt-2 italic font-semibold">
+              Full Body Checkup / Hba1c Test / Vitamin D 25 Hydroxy Test /
+              Cholesterol Test / Complete Urinalysis Test / FBS Test / TSH Test
+              / Liver Function Test / Creatinine Test / CRP Test / Urine Culture
+              Test / KFT Test / RFT Test / PT INR Test / ESR Test / Beta Hcg
+              Test / Uric Acid Test / Electrolytes Serum Test / Serum Potassium
+              Test / Urea And Creatinine Test / Calcium Serum Test / Sodium
+              Serum Test / HIV Rapid Test / Ferritin Test / Vitamin B12 Test /
+              Hbsag Test / Prolactin Test / RA Factor Test / Anti HCV Test /
+              VDRL Test / SGPT Test / Urine Protein Test / Prostatic Specific
+              Antigen Test / Anti Mullerian Hormone Test / Fasting Insulin Test
+              / Liver Function Test With Ggt / SGOT Ast Test / APTT Test / Total
+              Ige Test / Platelet Count Test / RT-PCR Test / Renal Profile Test
+              (KFT, RFT) / Hemogram Test / Lipid Profile Test / Thyroid Profile
+              Test (T3 T4 TSH) / D-Dimer Test / Complete Blood Count Test (CBC
+              Test) / Widal Test
+            </p>
+
+            <p class="mt-2">
+              Top-notch quality diagnostics are critical for the best treatment
+              and personalised patient care.
+            </p>
+
+            <!-- Booking Steps -->
+            <h2 class="mt-6 text-lg font-bold">
+              Here are some simple steps to book a lab test:
+            </h2>
+            <ul class="mt-2 list-disc list-inside space-y-1">
+              <li>
+                Book online - Select the package or test you want to book.
+              </li>
+              <li>
+                Choose home-sample collection option - A qualified phlebotomist
+                visits your home for sample collection at the selected slot
+                time.
+              </li>
+              <li>
+                Get fast and accurate blood test reports - download them from
+                the app or website anytime, anywhere!
+              </li>
+            </ul>
+
+            <!-- Pathology Labs -->
+            <h2 class="mt-6 text-lg font-bold">
+              Find Pathology Labs with Ease at Apollo 24|7
+            </h2>
+            <p class="mt-2">
+              Manage your health with prompt health check-ups from Apollo 24|7.
+              We offer an extensive range of laboratory services that deliver
+              factual diagnostic lab test results. You will find the most
+              trusted pathology labs here at Apollo 24|7.
+            </p>
+
+            <!-- Other Services -->
+            <h2 class="mt-6 text-lg font-bold">
+              Other Services Offered by Apollo 24|7
+            </h2>
+
+            <!-- Apollo Circle Membership -->
+            <h3 class="mt-4 text-md font-bold">
+              Apollo Circle Membership: Premium Healthcare Program
+            </h3>
+            <p class="mt-2 italic font-semibold">Apollo 24/7 Circle</p>
+            <p>
+              is an elite membership plan for those who put their overall health
+              and well-being on priority. This membership plan guarantees
+              priority access to Apollo’s best doctors, personalised care,
+              unique deals, and comprehensive wellness programs especially
+              curated by professionals.
+            </p>
+
+            <!-- Apollo Prohealth Program -->
+            <h3 class="mt-4 text-md font-bold">Apollo Prohealth Program</h3>
+            <p class="mt-2 italic font-semibold">Apollo ProHealth Program</p>
+            <p>
+              is an exclusive end-to-end personalised proactive healthcare
+              management program that combines predictive risk assessments and
+              top-notch quality diagnostics with accurate physician checks.
+              Approximately 22 million health checks have been done based on
+              this program. You can count on us for:
+            </p>
+            <ul class="list-disc list-inside space-y-1">
+              <li>
+                <span class="font-semibold"
+                  >Customised health risk assessments:</span
+                >
+                diagnostic tests designed exclusively for your profile to
+                foresee the health risks.
+              </li>
+              <li>
+                <span class="font-semibold">Physician-led assessment:</span>
+                designed for customised treatment plans and overall wellness
+                goals.
+              </li>
+              <li>
+                <span class="font-semibold">Multi-organ assessment:</span>
+                diagnostic tests designed as per your profile with consultations
+                from top specialists and physicians.
+              </li>
+              <li>
+                <span class="font-semibold">Health instructors:</span> to
+                evaluate your health parameters regularly and help you stay on
+                your path to health and wellness.
+              </li>
+            </ul>
+
+            <!-- Health Queries Section -->
+            <h2 class="mt-6 text-lg font-bold">Health Queries</h2>
+            <p class="mt-2">
+              Have questions about your health? Find answers to all your
+              <span class="font-semibold italic">health queries</span> regarding
+              sexual health, gastroenterological disorders, gynaecological
+              issues, dermatological problems, cardiological diseases, and more
+              from proficient doctors and accredited experts by using the Apollo
+              24|7 app and website.
+            </p>
+
+            <!-- Lab Tests Queries -->
+            <h2 class="mt-6 text-lg font-bold">Lab Tests Queries</h2>
+            <p class="mt-2">
+              Get answered for your lab tests. Find answers to all your
+              <span class="font-semibold italic">lab tests queries</span>
+              regarding CBC, LFT, thyroid profile, urine examination, glucose
+              fasting, and more from proficient doctors and accredited experts
+              by using the Apollo 24|7.
+            </p>
+
+            <!-- Disease and Conditions -->
+            <h2 class="mt-6 text-lg font-bold">Disease and Conditions</h2>
+            <p class="mt-2">
+              Want to know about the disease or condition you are suffering
+              from? We have provided all the information that helps our patients
+              to better understand
+              <span class="font-semibold italic">diseases and conditions</span>
+              like gonorrhoea, infertility, bronchitis, fatty liver, arthritis,
+              kidney failure, and more.
+            </p>
+          </div>
+        </div>
+
+        <!-- Expand Button -->
+        <button
+          id="toggleButton"
+          class="text-blue-600 font-semibold mt-4 block"
+        >
+          EXPAND ALL
+        </button>
+      </div>
+
+
+
+
+      <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 gap-y-6 text-sm mt-10">
+        
+        <!-- About Apollo 24|7 -->
+        <div>
+            <h2 class="font-bold mb-2 text-base">About Apollo 24|7</h2>
+            <ul class="space-y-1">
+                <li>About Us</li>
+                <li>Contact Us / Grievance</li>
+                <li>FAQs</li>
+                <li>Health Queries</li>
+                <li>Terms and Conditions</li>
+                <li>Returns Policy</li>
+                <li>Refund Policy</li>
+                <li>Privacy Policy</li>
+                <li>Apollo 24|7 Android App</li>
+                <li>Apollo 24|7 iOS App</li>
+                <li>Corporate Disclosures</li>
+                <li>Apollo 24|7 Sitemap</li>
+                <li>Online Doctor App</li>
+                <li>Online Medicine App</li>
+                <li>Apollo Pharmacy</li>
+                <li>Hospitals And Clinics</li>
+                <li>Disease and Conditions</li>
+                <li>Blogs</li>
+                <li>Lab Tests Queries</li>
+                <li>Diagnostics Centres</li>
+            </ul>
+        </div>
+
+        <!-- Services -->
+        <div>
+            <h2 class="font-bold mb-2 text-base">Services</h2>
+            <ul class="space-y-1">
+                <li>Online Doctor Consultation</li>
+                <li>Apollo Circle Membership</li>
+                <li>Online Medicines</li>
+                <li>Cough Scanner</li>
+                <li>Apollo Pro Health Program</li>
+                <li>Doctors by Specialty</li>
+                <li>Doctors by City</li>
+                <li>All Doctors List</li>
+                <li>Apollo Diabetes Reversal</li>
+                <li>International Patients Login</li>
+            </ul>
+        </div>
+
+        <!-- Top Specialties -->
+        <div>
+            <h2 class="font-bold mb-2 text-base">Top Specialties</h2>
+            <ul class="space-y-1">
+                <li>Covid Consultation</li>
+                <li>Consult Physicians</li>
+                <li>Consult Dermatologists</li>
+                <li>Consult Paediatricians</li>
+                <li>Consult Gynaecologists</li>
+                <li>Consult Gastroenterologists</li>
+                <li>Consult Cardiologists</li>
+                <li>Consult Dietitians</li>
+                <li>Consult ENT Specialists</li>
+                <li>Consult Geriatricians</li>
+                <li>Consult Diabetologists</li>
+            </ul>
+        </div>
+
+        <!-- Book Lab Tests at Home -->
+        <div>
+            <h2 class="font-bold mb-2 text-base">Book Lab Tests at Home</h2>
+            <ul class="space-y-1">
+                <li>RT PCR Test At Home</li>
+                <li>Book Lab Tests at Home</li>
+                <li>Renal Profile (KFT, RFT Test)</li>
+                <li>Hemogram Test</li>
+                <li>Lipid Profile Test</li>
+                <li>Thyroid Profile Test (T3 T4 Tsh Test)</li>
+                <li>D Dimer Test</li>
+                <li>Urine Culture Test</li>
+                <li>Complete Blood Count (CBC Test)</li>
+                <li>Widal Test</li>
+                <li>Liver Function Test (LFT Test)</li>
+            </ul>
+        </div>
+
+        <!-- Product Categories -->
+        <div>
+            <h2 class="font-bold mb-2 text-base">Product Categories</h2>
+            <ul class="space-y-1">
+                <li>View All Brands</li>
+                <li>Health Care</li>
+                <li>Personal Care</li>
+                <li>Baby Care</li>
+                <li>Nutrition</li>
+                <li>Healthcare Devices</li>
+                <li>Beauty Skin Care</li>
+                <li>Immunity Boosters</li>
+                <li>Coronavirus Prevention</li>
+                <li>Diabetes Care</li>
+                <li>Patanjali Coronil Kit</li>
+                <li>Mamaearth Products</li>
+            </ul>
+        </div>
+
+        <!-- Top Hospitals -->
+        <div>
+            <h2 class="font-bold mb-2 text-base">Top Hospitals</h2>
+            <ul class="space-y-1">
+                <li>Apollo Hospital Jubilee Hills</li>
+                <li>Apollo Hospitals Greams Road</li>
+                <li>Indraprastha Apollo Hospital</li>
+                <li>Apollo Hospitals Bannerghatta Road</li>
+                <li>Apollo Hospital - Belapur, Navi Mumbai</li>
+                <li>Apollo Hospitals Canal Circular Road</li>
+            </ul>
+        </div>
+
+    </div>
+    </main>
+    <footer class="max-w-7xl mb-20 mx-auto px-4 py-6 mt-10 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+    <!-- Logo -->
+    <div class="mb-4 md:mb-0">
+        <img src="https://apollo247.com/favicon.ico" alt="Apollo 24|7 Logo" class="w-20 mx-auto md:mx-0">
+    </div>
+
+    <!-- Mobile App Section -->
+    <div class="mb-4 md:mb-0">
+        <h2 class="font-semibold mb-2">Get Apollo Mobile App</h2>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+            <a href="#" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/256px-Google_Play_Store_badge_EN.svg.png" 
+                    alt="Google Play" class="w-36 mx-auto">
+            </a>
+            <a href="#" target="_blank">
+                <img src="https://media-hosting.imagekit.io/c474b04c56954d97/Screenshot_2025-03-28_225850-removebg-preview.png?Expires=1837791045&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=eWOLT~QkR6aFgmFj5JX3~mcf2s4VrK~LLD7vjoe55hkWOdB9nmk2bele5VKMT4-DlttcPUqLdlopcTbXDNn3Lnr96AHqPfuuDk-ZXMnFtXN8Fu~Z6PvcWl-kklFeUj1Z1Zcbj6-kT3x-B-WUs6KbrP7Ms91MyjzCcumxrnXD7AfpjN8sjD1-bfulw5qg688on~x-IPCxQaVfKtjZV0qoV7c3TrbdLxvJtmjHlgDgjRG~bPmkweVZTbjGYYRCM4QFdQAnkdGqa0qBL~ecIPGb9gX-1yOJvn5BkEhSw~krY29XVJ7TKgGBybfXMqXGHbwUIcZUmSrq3NTWij6OjxYl9A__" 
+                    alt="App Store" class="w-36 mx-auto">
+            </a>
+        </div>
+    </div>
+
+    <!-- Social Media Section -->
+    <div>
+        <h2 class="font-semibold mb-2">Find Us</h2>
+        <div class="flex gap-4 justify-center">
+            <a href="#" target="_blank">
+                <i class="fa-brands fa-facebook text-4xl text-blue-500"></i>
+            </a>
+            <a href="#" target="_blank">
+                <i class="fa-brands fa-x-twitter text-4xl"></i>
+            </a>
+            <a href="#" target="_blank">
+                <i class="fa-brands fa-linkedin text-4xl text-blue-500"></i>
+            </a>
+            <a href="#" target="_blank">
+                <i class="fa-brands fa-youtube text-4xl text-red-600"></i>
+            </a>
+        </div>
+    </div>
+</footer>
+
+
+    <script>
+      const carousels = {
+        carousel1: {
+          currentIndex: 0,
+          element: document.getElementById("carousel1"),
+        },
+        carousel2: {
+          currentIndex: 0,
+          element: document.getElementById("carousel2"),
+        },
+      };
+
+      function updateCarousel(id) {
+        const carousel = carousels[id];
+        if (carousel) {
+          carousel.element.style.transform = `translateX(-${
+            carousel.currentIndex * 100
+          }%)`;
+        }
+      }
+
+      function nextSlide(id) {
+        const carousel = carousels[id];
+        if (carousel) {
+          const totalSlides = carousel.element.children.length;
+          carousel.currentIndex = (carousel.currentIndex + 1) % totalSlides;
+          updateCarousel(id);
+        }
+      }
+
+      function prevSlide(id) {
+        const carousel = carousels[id];
+        if (carousel) {
+          const totalSlides = carousel.element.children.length;
+          carousel.currentIndex =
+            (carousel.currentIndex - 1 + totalSlides) % totalSlides;
+          updateCarousel(id);
+        }
+      }
+
+      // Auto-slide functionality for both carousels
+      Object.keys(carousels).forEach((id) => {
+        setInterval(() => nextSlide(id), 3000);
+      });
+
+      const button = document.getElementById("toggleButton");
+      const expandableContent = document.getElementById("expandableContent");
+      const hiddenElements = expandableContent.querySelectorAll(
+        "p.hidden, ul.hidden"
+      );
+
+      let isExpanded = false;
+
+      button.addEventListener("click", () => {
+        if (!isExpanded) {
+          hiddenElements.forEach((el) => el.classList.remove("hidden"));
+          expandableContent.classList.remove("max-h-20", "sm:max-h-24");
+          button.textContent = "COLLAPSE";
+        } else {
+          hiddenElements.forEach((el) => el.classList.add("hidden"));
+          expandableContent.classList.add("max-h-20", "sm:max-h-24");
+          button.textContent = "EXPAND ALL";
+        }
+        isExpanded = !isExpanded;
+      });
+    </script>
+  </body>
+</html>
