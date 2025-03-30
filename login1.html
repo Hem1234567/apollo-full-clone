@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link href="./output.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-black flex items-center justify-center min-h-screen p-4">
+    <div class="w-full max-w-md p-6 m-auto bg-white rounded-lg shadow-md">
+      <h2 class="text-center text-2xl font-bold text-blue-500">Login</h2>
+      <form id="login-form" class="mt-6">
+        <div>
+          <label class="block text-sm text-gray-800">Email</label>
+          <input
+            id="login-email"
+            type="email"
+            required
+            class="block w-full px-4 py-2 mt-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none"
+          />
+        </div>
+        <div class="mt-4">
+          <label class="block text-sm text-gray-800">Password</label>
+          <input
+            id="login-password"
+            type="password"
+            required
+            class="block w-full px-4 py-2 mt-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none"
+          />
+          <a href="forget1.html" class="text-xs text-blue-500 hover:underline"
+            >Forget Password?</a
+          >
+        </div>
+        <div class="mt-6">
+          <button
+            type="submit"
+            class="w-full px-6 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-400"
+          >
+            Login
+          </button>
+        </div>
+        <!-- ✅ Added "Create One" link below the login button -->
+        <p class="mt-8 text-xs font-light text-center text-black">
+          Don't have an account?
+          <a
+            href="register1.html"
+            class="font-medium text-blue-700 hover:underline"
+          >
+            Create One
+          </a>
+        </p>
+      </form>
+    </div>
+
+    <!-- Firebase & Login Script -->
+    <script type="module">
+      // Import Firebase
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+      import {
+        getAuth,
+        signInWithEmailAndPassword,
+      } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+
+      // Firebase Config
+      const firebaseConfig = {
+        apiKey: "AIzaSyA3X9yNHabwgdf1afAg7zRebZAKx7WU-50",
+        authDomain: "apollo-web-clone.firebaseapp.com",
+        projectId: "apollo-web-clone",
+        storageBucket: "apollo-web-clone.firebasestorage.app",
+        messagingSenderId: "1040900901645",
+        appId: "1:1040900901645:web:ba7e2af9b1d9861309be44",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth();
+
+      // Handle Login
+      document
+        .getElementById("login-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const email = document.getElementById("login-email").value;
+          const password = document.getElementById("login-password").value;
+
+          signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+              alert("Login successful!");
+              window.location.href = "home.html"; // Redirect to home.html after successful login
+            })
+            .catch((error) => {
+              alert("Invalid email or password.");
+            });
+        });
+    </script>
+  </body>
+</html>
