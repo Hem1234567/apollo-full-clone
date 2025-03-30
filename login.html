@@ -31,7 +31,7 @@
             required
             class="block w-full px-4 py-2 mt-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none"
           />
-          <a href="forget1.html" class="text-xs text-blue-500 hover:underline"
+          <a href="forget.html" class="text-xs text-blue-500 hover:underline"
             >Forget Password?</a
           >
         </div>
@@ -47,7 +47,7 @@
         <p class="mt-8 text-xs font-light text-center text-black">
           Don't have an account?
           <a
-            href="register1.html"
+            href="register.html"
             class="font-medium text-blue-700 hover:underline"
           >
             Create One
@@ -90,7 +90,7 @@
           signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
               alert("Login successful!");
-              window.location.href = "home.html"; // Redirect to home.html after successful login
+              window.location.href = "index.html"; // Redirect to home.html after successful login
             })
             .catch((error) => {
               alert("Invalid email or password.");
